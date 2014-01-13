@@ -9,6 +9,8 @@
 bash "updates packages" do
 	code "apt-get update"
 end
+
+
  
 # apt-get install git
 package "git"
@@ -45,8 +47,8 @@ package "libmagickwand-dev"
 #   action :enable
 # end
 
-include_recipe "ssh_users"
 include_recipe "apache2"
+include_recipe 'ruby_enterprise'
 include_recipe "apache2::mod_deflate"
 include_recipe "passenger_apache2"
 include_recipe "passenger_apache2::mod_rails"
