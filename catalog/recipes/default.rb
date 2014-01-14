@@ -63,8 +63,9 @@ end
 include_recipe "apache2"
 include_recipe "apache2::mod_deflate"
 include_recipe "rbenv::default"
-include_recipe "rbenv::ruby_build"
-include_recipe "rbenv::rbenv_vars"
+include_recipe "rbenv::user"
+##include_recipe "rbenv::ruby_build"
+
 
 # include_recipe 'ruby_enterprise'
 # include_recipe "passenger_apache2"
