@@ -46,7 +46,6 @@ package "libmagickwand-dev"
 #   supports :restart => true, :reload => true
 #   action :enable
 # end
-
 include_recipe "apache2"
 include_recipe "apache2::mod_deflate"
 include_recipe "rbenv::default"
@@ -54,10 +53,3 @@ include_recipe "rbenv::ruby_build"
 # include_recipe 'ruby_enterprise'
 # include_recipe "passenger_apache2"
 # include_recipe "passenger_apache2::mod_rails"
-
-directory "/var/www/html" do
-  recursive true
-  owner "www-data"
-  group "www-data"
-  mode "755"
-end

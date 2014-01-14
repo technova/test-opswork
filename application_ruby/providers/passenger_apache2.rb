@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include Chef::DSL::IncludeRecipe
+include Chef::Mixin::LanguageIncludeRecipe
 
 action :before_compile do
 
@@ -33,12 +33,12 @@ action :before_compile do
     end
     new_resource.server_aliases server_aliases
   end
-  r = new_resource
+
   new_resource.restart_command do
-    directory "#{r.application.path}/current/tmp" do
+    directory "#{new_resource.application.path}/current/tmp" do
       recursive true
     end
-    file "#{r.application.path}/current/tmp/restart.txt" do
+    file "#{new_resource.application.path}/current/tmp/restart.txt" do
       action :touch
     end
   end unless new_resource.restart_command
