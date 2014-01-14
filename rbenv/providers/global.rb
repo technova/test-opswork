@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: rbenv
-# Resource:: ruby
+# Provider:: global
 #
 # Author:: Fletcher Nichol <fnichol@nichol.ca>
 #
@@ -19,20 +19,22 @@
 # limitations under the License.
 #
 
-actions :install, :reinstall
+include Chef::Rbenv::ScriptHelpers
 
-attribute :definition,  :kind_of => String, :name_attribute => true
-attribute :definition_file,	:kind_of => String
-attribute :root_path,   :kind_of => String
-attribute :user,        :kind_of => String
-attribute :environment, :kind_of => Hash
+action :create do
+  if current_global_version != new_resource.rbenv_version
+    command = %{rbenv global #{new_resource.rbenv_version}}
 
-def initialize(*args)
-  super
-  @action = :install
-  @rbenv_version = @definition
-end
+    rbenv_script "#{command} #{which_rbenv}" do
+      code        command
+      user        new_resource.user       if new_resource.user
+      root_path   new_resource.root_path  if new_resource.root_path
 
-def to_s
-  "#{super} (#{@user || 'system'})"
+      action      :nothing
+    end.run_action(:run)
+
+    new_resource.updated_by_last_action(true)
+  else
+    Chef::Log.debug("#{new_resource} is already set - nothing to do")
+  end
 end

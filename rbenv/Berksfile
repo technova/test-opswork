@@ -2,6 +2,8 @@ site :opscode
 
 metadata
 
-group :test do
-  cookbook 'fake', :path => 'test/fixtures/cookbooks/fake'
+group :integration do
+  cookbook 'apt'
+  cookbook 'yum'
+  cookbook 'ruby_build'
 end
