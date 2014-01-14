@@ -7,20 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 #create user
-user "deploy" do
-    action :create
-    comment "deploy user"
-    uid next_free_uid
-    gid 'www-data'
-    home "/home/deploy"
-    supports :manage_home => true
-    shell '/bin/bash'
-    not_if do
-      existing_usernames = []
-      Etc.passwd {|user| existing_usernames << user['name']}
-      existing_usernames.include?("deploy")
-    end
-end
+
 
 node["deploy"].each do |application, deploy|
   application "#{application}" do
