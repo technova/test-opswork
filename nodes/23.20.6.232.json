@@ -1,0 +1,39 @@
+{
+    "run_list": [
+        "recipe[apt]",
+        "recipe[logrotate]",
+        "recipe[ruby_build]",
+        "recipe[rbenv::user]",
+        "recipe[catalog::requirements]",
+        "recipe[catalog::default]",
+        "recipe[passenger_apache2]"
+    ],
+    "username": "ubuntu",
+    "rbenv": {
+        "user_installs": [
+            {
+                "user": "ubuntu",
+                "rubies": [
+                    "1.8.7-p374"
+                ],
+                "global": "1.8.7-p374",
+                "gems": {
+                    "1.8.7-p374": [
+                        {
+                            "name": "passenger"
+                        },
+                        {
+                            "name": "bundler"
+                        },
+                        {
+                            "name": "rake"
+                        },
+                        {
+                            "name": "awesome_print"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
