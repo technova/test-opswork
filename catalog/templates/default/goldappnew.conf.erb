@@ -1,0 +1,49 @@
+<VirtualHost *:80>
+  ServerName oopsdemo.viburnix.com
+  ServerAlias goldappnew
+
+  DocumentRoot /srv/www/goldappnew/current/public/
+  RailsBaseURI /
+  RailsEnv iima_ops
+
+  <Directory /srv/www/goldappnew/current/public/>
+    Options FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  <Directory ~ "\.svn">
+    Order allow,deny
+    Deny from all
+  </Directory>
+
+  <Directory ~ "\.git">
+    Order allow,deny
+    Deny from all
+  </Directory>
+
+  LogLevel info
+  ErrorLog /var/log/apache2/goldappnew-error.log
+  CustomLog /var/log/apache2/goldappnew-access.log combined
+  CustomLog /var/log/apache2/goldappnew-ganglia.log ganglia
+
+  FileETag none
+
+  RewriteEngine On
+  Include /etc/apache2/sites-available/goldappnew.conf.d/rewrite*
+  RewriteLog /var/log/apache2/goldappnew-rewrite.log
+  RewriteLogLevel 0
+
+  # Canonical host
+  #RewriteCond %{HTTP_HOST}   !^oopsdemo.viburnix.com [NC]
+  #RewriteCond %{HTTP_HOST}   !^$
+  #RewriteRule ^/(.*)$        http://oopsdemo.viburnix.com/$1 [L,R=301]
+
+  RewriteCond %{REQUEST_URI} !\.(css|gif|jpg|jpeg|png)$
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$ /system/maintenance.html [L]
+
+  Include /etc/apache2/sites-available/goldappnew.conf.d/local*
+</VirtualHost>
