@@ -1,1 +1,4 @@
-run "touch /tmp/rajesh"
+package 'htop' do
+  package_name 'htop'
+  action :install
+end
