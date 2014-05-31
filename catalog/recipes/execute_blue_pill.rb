@@ -9,8 +9,6 @@ commands.each do |command|
     cwd directory
     command command
     action :run    
-    # only_if do 
-    #   File.exists?(deploy[:current_path])
-    # end
+    not_if "ps awux | grep rake"
   end    
 end
