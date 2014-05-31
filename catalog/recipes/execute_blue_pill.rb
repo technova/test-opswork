@@ -4,14 +4,13 @@ Chef::Log.info "Running bluepill..."
 
 include_recipe "deploy"
 
-node[:deploy].each do |application, deploy|
-  execute "restart bluepill" do
-    cwd deploy[:current_path]
-    command @command
-    action :run
-    
-    only_if do 
-      File.exists?(deploy[:current_path])
-    end
-  end    
-end
+# node[:deploy].each do |application, deploy|
+#   execute "restart bluepill" do
+#     cwd deploy[:current_path]
+#     command @command
+#     action :run    
+#     only_if do 
+#       File.exists?(deploy[:current_path])
+#     end
+#   end    
+# end
