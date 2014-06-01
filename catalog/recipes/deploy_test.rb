@@ -2,6 +2,9 @@ package 'htop' do
   package_name 'htop'
   action :install
 end
+execute "gem install remote_syslog --no-ri --no-rdoc" do
+  action :run
+end
 template "/etc/log_files.yml" do
   source "log_files.yml.erb"
   owner "root"
